@@ -8,25 +8,6 @@ class OpeningScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
-        SizedBox(
-          height: 10.0,
-        ),
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(34.0),
-              child: Text(
-                'Quiz',
-                style: GoogleFonts.lato(
-                  textStyle: TextStyle(
-                    fontSize: 30.0,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
         Container(
           decoration: BoxDecoration(
             color: Colors.white,
