@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class OpeningScreen extends StatelessWidget {
   const OpeningScreen({super.key});
@@ -7,6 +8,25 @@ class OpeningScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
+        SizedBox(
+          height: 10.0,
+        ),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(34.0),
+              child: Text(
+                'Quiz',
+                style: GoogleFonts.lato(
+                  textStyle: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
         Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -19,6 +39,20 @@ class OpeningScreen extends StatelessWidget {
               image: DecorationImage(
                 image: AssetImage("assets/images/9.jpeg"),
                 fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 30.0,
+          left: 24,
+          child: Text(
+            'Quiz',
+            style: GoogleFonts.pacifico(
+              textStyle: TextStyle(
+                fontSize: 35.0,
+                color: Color.fromRGBO(126, 87, 194, 1),
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -47,15 +81,16 @@ class OpeningScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 8.0),
-                  const Text(
+                  Text(
                     'Login',
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
+                    style: GoogleFonts.pacifico(
+                      textStyle: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: 5.0),
                   TextFormField(
                     decoration: InputDecoration(
                       filled: true,
@@ -90,7 +125,7 @@ class OpeningScreen extends StatelessWidget {
                     ),
                     obscureText: true,
                   ),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: 2.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
