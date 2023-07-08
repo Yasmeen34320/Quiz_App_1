@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'Screens/openning_screen.dart';
+import 'Screens/LoginScreen.dart';
+import 'Screens/OpenningScreen.dart';
 
 void main() {
   runApp(const OurQuizzApp());
@@ -12,7 +13,7 @@ class OurQuizzApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: OpeningScreen(),
+      home: OpenningScreen(),
     );
   }
 }
