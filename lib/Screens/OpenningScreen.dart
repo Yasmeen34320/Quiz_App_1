@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Screens/LoginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
+
+
 class OpenningScreen extends StatelessWidget {
   const OpenningScreen({super.key});
 

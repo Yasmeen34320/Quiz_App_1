@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/Screens/Categories.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -131,7 +132,12 @@ class LoginScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 2.0),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Categories()),
+                      );
+                    },
                     child: const Text('Login',
                         style: TextStyle(
                           fontSize: 20.0,
