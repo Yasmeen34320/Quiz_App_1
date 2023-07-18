@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Screens/Categories.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+final _formKey = GlobalKey<FormState>();
+final username = TextEditingController();
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -60,132 +63,162 @@ class LoginScreen extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Login',
-                    style: GoogleFonts.pacifico(
-                      textStyle: TextStyle(
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 5.0),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 16.0,
-                        horizontal: 20.0,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      hintText: 'Username',
-                      prefixIcon: const Icon(Icons.person),
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      prefixIcon: const Icon(Icons.lock),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 16.0,
-                        horizontal: 20.0,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 2.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+              child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        'New to Quiz?',
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            color: Color.fromRGBO(211, 207, 200, 1)),
+                      Text(
+                        'Login',
+                        style: GoogleFonts.pacifico(
+                          textStyle: TextStyle(
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                      const SizedBox(
-                        width: 10,
+                      const SizedBox(height: 5.0),
+                      TextFormField(
+                        controller: username,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 16.0,
+                            horizontal: 20.0,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          hintText: 'Username',
+                          prefixIcon: const Icon(Icons.person),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your username';
+                          } else if (value.length < 9) {
+                            return 'Username must be at least 9 characters long';
+                          } else if (!RegExp(r'^[A-Z][a-zA-Z0-9]*$')
+                              .hasMatch(value)) {
+                            return 'Username must start with an uppercase letter and contain only letters and numbers';
+                          }
+                          return null;
+                        },
                       ),
-                      const Text(
-                        'Register?',
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            decoration: TextDecoration.underline,
-                            color: Colors.blue),
+                      const SizedBox(height: 10.0),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Password',
+                          prefixIcon: const Icon(Icons.lock),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 16.0,
+                            horizontal: 20.0,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                        obscureText: true,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 2.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Categories()),
-                      );
-                    },
-                    child: const Text('Login',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                        )),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+                      const SizedBox(height: 2.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'New to Quiz?',
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                color: Color.fromRGBO(211, 207, 200, 1)),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Text(
+                            'Register?',
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                decoration: TextDecoration.underline,
+                                color: Colors.blue),
+                          ),
+                        ],
                       ),
-                      fixedSize: const Size(200.0, 50.0),
-                    ),
-                  ),
-                  const SizedBox(height: 2.0),
-                  Icon(
-                    Icons.fingerprint,
-                    size: 48.0,
-                    color: Colors.blue[700],
-                  ),
-                  const SizedBox(height: 10.0),
-                  const Text(
-                    'Use Touch Id',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  const SizedBox(height: 5.0),
-                  Row(
-                    //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                      const SizedBox(height: 2.0),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            // Validate the username before navigating to another page
+                            //    String username = _usernameController.text;
+
+                            // Navigate to another page with the username
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Categories(),
+                              ),
+                            );
+                          } else {
+                            // Display an error message to the user
+                            print('Invalid username');
+                          }
+                        },
+                        child: const Text('Login',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                            )),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          fixedSize: const Size(200.0, 50.0),
+                        ),
+                      ),
+                      const SizedBox(height: 2.0),
                       Icon(
-                        Icons.check_box_outlined,
-                        size: 15.0,
-                        color: Colors.grey[600],
+                        Icons.fingerprint,
+                        size: 48.0,
+                        color: Colors.blue[700],
                       ),
-                      const SizedBox(
-                        width: 4.0,
+                      const SizedBox(height: 10.0),
+                      const Text(
+                        'Use Touch Id',
+                        style: TextStyle(color: Colors.grey),
                       ),
-                      Text(
-                        'Remember Me',
-                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-                      ),
-                      const SizedBox(
-                        width: 105.0,
-                      ),
-                      Text(
-                        'Forget Password?',
-                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                      const SizedBox(height: 5.0),
+                      Row(
+                        //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(
+                            Icons.check_box_outlined,
+                            size: 15.0,
+                            color: Colors.grey[600],
+                          ),
+                          const SizedBox(
+                            width: 4.0,
+                          ),
+                          Text(
+                            'Remember Me',
+                            style: TextStyle(
+                                fontSize: 14, color: Colors.grey[600]),
+                          ),
+                          const SizedBox(
+                            width: 105.0,
+                          ),
+                          Text(
+                            'Forget Password?',
+                            style: TextStyle(
+                                fontSize: 14, color: Colors.grey[600]),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

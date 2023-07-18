@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Screens/ScoreScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Global/global.dart';
+
 import 'OpenningScreen.dart';
 
-class QuestionScreen extends StatelessWidget {
-  const QuestionScreen({super.key});
+class QuestionScreen extends StatefulWidget {
+  final String? TestName;
+  final List? Question;
+  QuestionScreen({super.key, this.Question, this.TestName});
 
+  @override
+  State<QuestionScreen> createState() => _QuestionScreenState();
+}
+
+class _QuestionScreenState extends State<QuestionScreen> {
+  int index = 0, score = 0;
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -18,20 +28,41 @@ class QuestionScreen extends StatelessWidget {
               width: screenSize.width,
               height: screenSize.height * (1 / 8),
               child: AppBar(
+                leadingWidth: 100,
                 backgroundColor: const Color.fromRGBO(126, 87, 194, 1),
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                leading: Center(
+                  child: Text(
+                    widget.TestName!,
+                    style: TextStyle(
+                      fontFamily: 'Arial',
+                      fontSize: 17.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                title: Text(
-                  'General Test',
-                  style: TextStyle(
-                    fontFamily: 'Arial',
-                    fontSize: 24.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                title: Center(
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Question NO',
+                        style: TextStyle(
+                          fontFamily: 'Arial',
+                          fontSize: 17.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "${index + 1}/${widget.Question!.length}",
+                        style: TextStyle(
+                          fontFamily: 'Arial',
+                          fontSize: 17.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 actions: <Widget>[
@@ -46,9 +77,10 @@ class QuestionScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                       Navigator.push(
+                      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => OpenningScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => const OpenningScreen()),
                       );
                     },
                     iconSize: 80.0,
@@ -61,9 +93,9 @@ class QuestionScreen extends StatelessWidget {
             ),
             Container(
               width: screenSize.width - 17,
-              height: screenSize.height * 1 / 6,
+              height: screenSize.height * 1 / 5 + 34,
               child: Card(
-                color: Color.fromRGBO(246, 241, 248, 1),
+                color: const Color.fromRGBO(246, 241, 248, 1),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(28.0),
                 ),
@@ -74,7 +106,7 @@ class QuestionScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Question 1',
+                        "Question ${index + 1}",
                         style: GoogleFonts.pacifico(
                           fontSize: 25,
                           decoration: TextDecoration.underline,
@@ -82,9 +114,9 @@ class QuestionScreen extends StatelessWidget {
                           decorationThickness: 2.0,
                         ),
                       ),
-                      SizedBox(height: 8.0),
+                      const SizedBox(height: 8.0),
                       Text(
-                        'What is the capital of France?',
+                        widget.Question![index]["question"],
                         style: GoogleFonts.pacifico(
                           fontSize: 18,
                         ),
@@ -108,135 +140,53 @@ class QuestionScreen extends StatelessWidget {
                 )
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
+            for (int i = 0;
+                i < (widget.Question![index]["options"] as List).length;
+                i++)
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    score = score +
+                        int.parse(
+                            widget.Question![index]["options"][i]["Score"]);
+
+                    if (index == widget.Question!.length - 1) {
+                      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ScoreScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => ScoreScreen(
+                                  Score: score,
+                                  idx: index,
+                                )),
                       );
-                },
-                child: Text(
-                  'Paris ',
-                  style: GoogleFonts.pacifico(
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Color.fromRGBO(246, 241, 248, 1)),
-                  minimumSize: MaterialStateProperty.all<Size>(
-                      Size(screenSize.width, screenSize.height * (1 / 12))),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28.0),
+                    } else {
+                      setState(() {
+                        index++;
+                      });
+                    }
+                  },
+                  child: Text(
+                    widget.Question![index]["options"][i]["ans"],
+                    style: GoogleFonts.pacifico(
+                      fontSize: 20,
+                      color: Colors.black,
                     ),
                   ),
-                  elevation: MaterialStateProperty.all<double>(8),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ScoreScreen()),
-                      );
-                },
-                child: Text(
-                  'London ',
-                  style: GoogleFonts.pacifico(
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Color.fromRGBO(246, 241, 248, 1)),
-                  minimumSize: MaterialStateProperty.all<Size>(
-                      Size(screenSize.width, screenSize.height * (1 / 12))),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28.0),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromRGBO(246, 241, 248, 1)),
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(screenSize.width, screenSize.height * (1 / 12))),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(28.0),
+                      ),
                     ),
+                    elevation: MaterialStateProperty.all<double>(8),
                   ),
-                  elevation: MaterialStateProperty.all<double>(8),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ScoreScreen()),
-                      );
-                },
-                child: Text(
-                  'Moscow ',
-                  style: GoogleFonts.pacifico(
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Color.fromRGBO(246, 241, 248, 1)),
-                  minimumSize: MaterialStateProperty.all<Size>(
-                      Size(screenSize.width, screenSize.height * (1 / 12))),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28.0),
-                    ),
-                  ),
-                  elevation: MaterialStateProperty.all<double>(8),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ScoreScreen()),
-                      );
-                },
-                child: Text(
-                  'Rome ',
-                  style: GoogleFonts.pacifico(
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Color.fromRGBO(246, 241, 248, 1)),
-                  minimumSize: MaterialStateProperty.all<Size>(
-                      Size(screenSize.width, screenSize.height * (1 / 12))),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28.0),
-                    ),
-                  ),
-                  elevation: MaterialStateProperty.all<double>(8),
-                ),
-              ),
-            ),
           ],
         ),
       ),

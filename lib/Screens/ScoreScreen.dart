@@ -3,7 +3,8 @@ import 'package:flutter_application_2/Screens/LoginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ScoreScreen extends StatelessWidget {
-  const ScoreScreen({super.key});
+  final int? Score, idx;
+  const ScoreScreen({super.key, this.Score, this.idx});
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +25,16 @@ class ScoreScreen extends StatelessWidget {
                   style: GoogleFonts.lancelot(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: 50,
+                    fontSize: 40,
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: 'Yasmin',
+                      text: '${username.text}',
                       style: TextStyle(
                         decoration: TextDecoration.underline,
                         decorationColor: Color.fromRGBO(126, 87, 194, 1),
                         decorationThickness: 2.0,
-                        fontSize: 50,
+                        fontSize: 40,
                         color: Color.fromRGBO(126, 87, 194, 1),
                         fontStyle: FontStyle.italic,
                       ),
@@ -43,11 +44,11 @@ class ScoreScreen extends StatelessWidget {
               ),
               RichText(
                 text: TextSpan(
-                  text: 'Your Score is 1 / 1 ',
+                  text: "Your Score is ${Score!} / ${idx! + 1}",
                   style: GoogleFonts.lancelot(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: 50,
+                    fontSize: 40,
                   ),
                 ),
               ),

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Screens/LoginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
-
 class OpenningScreen extends StatelessWidget {
   const OpenningScreen({super.key});
 
@@ -39,7 +36,7 @@ class OpenningScreen extends StatelessWidget {
             Text(
               "We Are Creative, enjoy our App",
               style: GoogleFonts.pacifico(
-                fontSize: 20,
+                fontSize: 20, 
               ),
             ),
             Spacer(),
@@ -47,7 +44,7 @@ class OpenningScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * .8,
-                height: 40,
+                height: 40, 
                 child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -67,7 +64,7 @@ class OpenningScreen extends StatelessWidget {
                       "Start",
                       style: GoogleFonts.pacifico(
                         fontSize: 20,
-                      ),
+                      ), 
                     )),
               ),
             ),
